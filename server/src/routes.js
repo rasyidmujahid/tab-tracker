@@ -13,4 +13,8 @@ module.exports = (app) => {
     // )
   })
 
+  app.post('/register',
+    AuthenticationControllerPolicy.register,
+    AuthenticationController.register
+  )
 }
