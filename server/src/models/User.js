@@ -8,12 +8,39 @@ function hashPassword(user) {
     return;
   }
 
-  return bcrypt
-    .genSaltAsync(SALT_FACTOR)
-    .then(salt => bcrypt.hashAsync(user.password, salt, null))
-    .then(hash => {
-      user.setDataValue('password', hash)
-    })
+  // return bcrypt
+  //   .genSaltAsync(SALT_FACTOR)
+  //   .then(salt => {
+  //     console.log('salt', salt)
+  //     bcrypt.hashAsync(user.password, salt, null)
+  //   })
+  //   .then(hash => {
+  //     console.log('hash', hash)
+  //     user.setDataValue('password', hash)
+  //   })
+  //   .catch(err => {
+  //     console.error(err)
+  //   })
+
+  const salt = bcrypt.genSaltSync(SALT_FACTOR)
+  console.log('salt', salt)
+
+  const hash = bcrypt.hashSync(user.password, salt)
+  console.log('hash', hash)
+
+  return user.setDataValue('password', hash)
+}
+
+// function beforeCreate() {
+//   console.log('beforeCreate')
+// }
+
+// function beforeUpdate() {
+//   console.log('beforeUpdate')
+// }
+
+function beforeSave() {
+  console.log('beforeSave')
 }
 
 module.exports = (sequelize, DataTypes) => {
